@@ -20,7 +20,7 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set(CMAKE_CXX_FLAGS_RELEASE "-O2 -O3")
 endif()
 
-include_directories(src external/SANDAL2/headers)
+include_directories(src src/castor-engine external/SANDAL2/headers)
 
 file(GLOB_RECURSE common_sources src/common/*.cpp)
 file(GLOB_RECURSE common_headers src/common/*.hpp)

@@ -19,17 +19,19 @@ struct Bar
 auto has_foo = has_method([](auto&& a) -> decltype(a.foo()) {});
 
 template<typename T>
-std::enable_if_t<decltype(has_foo(std::declval<T>()))::value,int>
+using has_foo_t = decltype(has_foo(std::declval<T>())); 
+
+template<typename T>
+std::enable_if_t<has_foo_t<T>::value,int>
 foo() {
   return 5;
 }
 
 template<typename T>
-std::enable_if_t<!decltype(has_foo(std::declval<T>()))::value,int>
+std::enable_if_t<!has_foo_t<T>::value,int>
 foo() {
   return 0;
 }
-
 
 TEST_CASE("has method") {
   
