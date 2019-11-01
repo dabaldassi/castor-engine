@@ -24,15 +24,20 @@ include_directories(src src/castor-engine external/SANDAL2/headers)
 
 file(GLOB_RECURSE common_sources src/common/*.cpp)
 file(GLOB_RECURSE common_headers src/common/*.hpp)
-message(STATUS "${common_sources} ${common_headers}")
 add_library(castor_common ${common_sources} ${common_headers})
 set_target_properties(castor_common PROPERTIES LINKER_LANGUAGE CXX)
+
+file(GLOB_RECURSE sound_sources src/sound/*.cpp)
+file(GLOB_RECURSE sound_headers src/sound/*.hpp)
+add_library(sound_engine ${sound_sources} ${sound_headers})
+target_link_libraries(sound_engine fmod)
 
 file(GLOB_RECURSE ${PROJECT_NAME}_sources src/castor-engine/*.cpp)
 add_library(castor-engine ${${PROJECT_NAME}_sources})
 target_link_libraries(castor-engine
   SANDAL2
   castor_common
+  sound_engine
   )
 
 if(INCLUDE_EXAMPLES)
