@@ -1,7 +1,7 @@
-#include <sound/sound_engine.hpp>
-
-#include <unistd.h>
 #include <iostream>
+#include <chrono>
+#include <thread>
+#include <sound/sound_engine.hpp>
 
 int main(){
   castor::SoundEngine::init();
@@ -17,8 +17,16 @@ int main(){
 
   sound_engine.update(0.f);
   
-  std::cout << i << "\n";
-  sleep(1);
-   
+  std::cout << "Channel id : " << i << "\n";
+
+  auto t1 = std::chrono::system_clock::now();
+  while(sound_engine.is_channel_playing(i)) {
+    auto t2 = std::chrono::system_clock::now();
+    std::chrono::duration<double> diff = t2 - t1;
+    sound_engine.update(diff.count());
+    t1 = t2;
+    std::this_thread::sleep_for(std::chrono::milliseconds(16));
+  }
+  
   castor::SoundEngine::exit();
 }

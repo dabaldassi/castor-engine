@@ -14,10 +14,12 @@ option(INCLUDE_EXAMPLES off)
 
 add_subdirectory(external/SANDAL2)
 
+set(CMAKE_CXX_FLAGS "-fdiagnostics-color ${CMAKE_CXX_FLAGS}")
+
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
   set(CMAKE_CXX_FLAGS "-Wall -Wextra ${CMAKE_CXX_FLAGS}")
-  set(CMAKE_CXX_FLAGS_DEBUG "-g -O0")
-  set(CMAKE_CXX_FLAGS_RELEASE "-O2 -O3")
+  set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 ${CMAKE_CXX_FLAGS_DEBUG}")
+  set(CMAKE_CXX_FLAGS_RELEASE "-O2 -O3 ${CMAKE_CXX_FLAGS_RELEASE}")
 endif()
 
 include_directories(src src/castor-engine external/SANDAL2/headers)

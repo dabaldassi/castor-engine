@@ -10,7 +10,7 @@
 
 namespace castor {
 
-  namespace SoundEngineImpl {
+  namespace impl {
 
     struct SoundDefinition {
       std::string   path;
@@ -28,7 +28,7 @@ namespace castor {
       FMOD::Sound     * sound;
     };
 
-    struct SoundEngineData;
+    struct SoundEngineImpl;
     
     class Channel
     {
@@ -40,10 +40,10 @@ namespace castor {
       FMOD::Channel *  _channel = nullptr;
       State            _state   = State::NONE;
       int              _sound_id;
-      SoundEngineData& _data; 
+      SoundEngineImpl& _impl; 
 
     public:
-      Channel(int ch_id, SoundEngineData& data, int sound_id, const Vec3<float>& position, float volume);
+      Channel(int ch_id, SoundEngineImpl& impl, int sound_id, const Vec3<float>& position, float volume);
       
       void update(float dt);
       bool is_playing() const;
@@ -54,7 +54,7 @@ namespace castor {
     using SoundPtr = std::unique_ptr<Sound>;
     using ChannelPtr = std::unique_ptr<Channel>;
     
-    struct SoundEngineData
+    struct SoundEngineImpl
     {
       std::map<int,SoundPtr>   sounds;
       std::map<int,ChannelPtr> channels;
@@ -63,6 +63,8 @@ namespace castor {
       int next_channel_id;
 
       static FMOD::System * system;
+
+      void load(int sound_id);
     };
 
     template<typename T, typename... Args>

@@ -10,11 +10,11 @@ namespace castor {
   class SoundEngine
   {
   public:
-    using SoundDefinition = SoundEngineImpl::SoundDefinition;
+    using SoundDefinition = impl::SoundDefinition;
   private:
     static FMOD::System* _system;
 
-    SoundEngineImpl::SoundEngineData _data;
+    impl::SoundEngineImpl _impl;
     
   public:
 
@@ -48,7 +48,8 @@ namespace castor {
     void stop_sound(int sound_id);
     int  play_sound(int sound_id, const Vec3<float>& v = Vec3<float>(0.f,0.f,0.f), float volume=1.0f);
     int  add_sound(const SoundDefinition& sound_def);
-
+    bool is_channel_playing(int channel_id);
+    
     // bool should_be_virtual();
 
   protected:
