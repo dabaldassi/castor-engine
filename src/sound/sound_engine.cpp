@@ -39,6 +39,7 @@ int SoundEngine::add_sound(const SoundEngine::SoundDefinition &sound_def)
 
   sound->def = sound_def;
   sound->id  = sound_id;
+  sound->is_loaded = false;
 
   _impl.sounds[sound_id] = std::move(sound);
   

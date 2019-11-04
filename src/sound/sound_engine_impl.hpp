@@ -25,6 +25,7 @@ namespace castor {
     {
       int               id;
       SoundDefinition   def;
+      bool              is_loaded;
       FMOD::Sound     * sound;
     };
 
@@ -33,7 +34,7 @@ namespace castor {
     class Channel
     {
     public:
-      enum class State { NONE, TO_PLAY, PLAYING, PAUSED, STOPPED };
+      enum class State { NONE, LOADING, TO_PLAY, PLAYING, PAUSED, STOPPED };
     private:
       
       int              _id;
@@ -65,6 +66,7 @@ namespace castor {
       static FMOD::System * system;
 
       void load(int sound_id);
+      bool is_loaded(int sound_id);
     };
 
     template<typename T, typename... Args>

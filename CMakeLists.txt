@@ -10,6 +10,8 @@ set(CMAKE_CXX_STANDARD 14)
 option(INCLUDE_TESTS off)
 option(INCLUDE_EXAMPLES off)
 
+find_package(Threads REQUIRED)
+
 # find_package(Box2D REQUIRED)
 
 add_subdirectory(external/SANDAL2)
@@ -32,7 +34,10 @@ set_target_properties(castor_common PROPERTIES LINKER_LANGUAGE CXX)
 file(GLOB_RECURSE sound_sources src/sound/*.cpp)
 file(GLOB_RECURSE sound_headers src/sound/*.hpp)
 add_library(sound_engine ${sound_sources} ${sound_headers})
-target_link_libraries(sound_engine fmod)
+target_link_libraries(sound_engine
+  fmod
+  ${CMAKE_THREAD_LIBS_INIT}
+  )
 
 file(GLOB_RECURSE ${PROJECT_NAME}_sources src/castor-engine/*.cpp)
 add_library(castor-engine ${${PROJECT_NAME}_sources})
